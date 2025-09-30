@@ -92,9 +92,10 @@ module.exports = {
 
   async verifyCredentials(Email, Password) {
     const delivery = await deliveryCollecton().findOne({ Email });
-    if (!delivery) return false;
+    if (!delivery) return { status: false };
+    if (delivery.isBlock) return { status: false, isBlock: true };
     const isMatch = await bcrypt.compare(Password, delivery.Password);
-    return isMatch ? delivery : false;
+    return isMatch ? delivery : { status: false };
   },
 
   forgotPassword: async (email) => {

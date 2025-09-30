@@ -65,6 +65,9 @@ module.exports = {
           .json({ message: "Email and Password are required" });
       }
       const delivery = await deliveryModel.verifyCredentials(Email, Password);
+      if(!delivery.status && delivery.isBlock){
+        return res.json({message:"This account is blocked"})
+      }
       if (!delivery) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
