@@ -65,13 +65,13 @@ module.exports = {
           .json({ message: "Email and Password are required" });
       }
       const delivery = await deliveryModel.verifyCredentials(Email, Password);
-      if(!delivery.status && delivery.isBlock){
-        return res.json({message:"This account is blocked"})
+      if (!delivery.status && delivery.isBlock) {
+        return res.json({ message: "This account is blocked" });
       }
-      if (!delivery) {
+      if (!delivery.status) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
-      // JWT payload (do not include password)
+
       const payload = {
         id: delivery._id,
         Name: delivery.Name,
