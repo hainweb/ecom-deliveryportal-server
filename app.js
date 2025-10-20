@@ -14,10 +14,13 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, 
+    credentials: true,
   })
 );
 
+app.get("/health", (req, res) => {
+  res.status(200).send("Ok");
+});
 app.use("/", indexRouter);
 
 db.connect((err) => {
