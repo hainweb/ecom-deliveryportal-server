@@ -95,6 +95,9 @@ module.exports = {
     if (!delivery) return { status: false };
     if (delivery.isBlock) return { status: false, isBlock: true };
     const isMatch = await bcrypt.compare(Password, delivery.Password);
+    {
+      isMatch && (delivery.status = true);
+    }
     return isMatch ? delivery : { status: false };
   },
 
